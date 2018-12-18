@@ -3,13 +3,16 @@ import { Grid, Divider, Table } from 'semantic-ui-react';
 import Buttons from './components/Button';
 import PostDetail from './components/PostDetail';
 import posts from './posts';
+import fnOrderPosts from './sort';
 import './App.css';
+
+const postSort =  fnOrderPosts(posts, 'desc')
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      posts,
+      posts: postSort,
       basic: true,
       noBasic: false
     };
@@ -17,40 +20,13 @@ class App extends Component {
     this.handleOrderDesc = this.handleOrderDesc.bind(this);
   }
 
-  fnOrderPosts(posts, order){
-    switch (order) {
-      case 'asc':
-        posts.sort( (a, b) => {
-          if(a.votes > b.votes) {
-            return 1;
-          } else if(a.votes < b.votes) {
-              return -1;
-          }
-          return 0
-        });
-          break;
-        
-        case 'desc':
-          posts.sort( (a, b) => {
-            if(a.votes < b.votes) {
-              return 1;
-            } else if(a.votes > b.votes) {
-                return -1;
-            }
-            return 0;
-          });
-          break;
-        default:
-          break;
-      }
-  }
-
+  
   handleOrderAsc() {
     this.setState({
       basic: false,
       noBasic: true
     });
-    this.fnOrderPosts(this.state.posts, 'asc')
+    this.state.posts.reverse();
   }
   
   handleOrderDesc() {
@@ -58,7 +34,7 @@ class App extends Component {
       basic: true,
       noBasic: false
     });
-    this.fnOrderPosts(this.state.posts, 'desc')
+    this.state.posts.reverse();
   }
 
   handleUpVotes(index) {
@@ -66,7 +42,7 @@ class App extends Component {
    this.setState({
      posts: this.state.posts
    });
-  this.state.basic ? this.fnOrderPosts(this.state.posts, 'desc') : this.fnOrderPosts(this.state.posts, 'asc')
+  this.state.basic ? fnOrderPosts(this.state.posts, 'desc') : fnOrderPosts(this.state.posts, 'asc')
   }
   
   handleDownVotes(index) {
@@ -74,11 +50,11 @@ class App extends Component {
     this.setState({
       posts: this.state.posts
     });
-    this.state.basic ? this.fnOrderPosts(this.state.posts, 'desc') : this.fnOrderPosts(this.state.posts, 'asc')
+    this.state.basic ? fnOrderPosts(this.state.posts, 'desc') : fnOrderPosts(this.state.posts, 'asc')
   }
 
   componentWillMount() {
-    this.state.basic ? this.fnOrderPosts(this.state.posts, 'desc') : this.fnOrderPosts(this.state.posts, 'asc')
+    this.state.basic ? fnOrderPosts(this.state.posts, 'desc') : fnOrderPosts(this.state.posts, 'asc')
   }
 
   render() {
@@ -126,9 +102,9 @@ class App extends Component {
                 }
               </Table.Body>
             </Table>
-
           </Grid.Column>
         </Grid.Row>
+        
       </Grid>
     );
   }
