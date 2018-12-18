@@ -2,3 +2,7 @@ img{
   width: 150px;
   height: 100px;
 }
+
+.table_cell-writtenby{
+  color: gray;
+}

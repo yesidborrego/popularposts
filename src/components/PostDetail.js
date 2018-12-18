@@ -1,10 +1,6 @@
 import React from 'react'
 import {Table, Icon, Image} from 'semantic-ui-react';
 
-const styleColor = {
-  color: 'gray'
-}
-
 const PostDetail = ({post, handleUpVotes, handleDownVotes}) => {
   return (
     <Table.Row>
@@ -17,7 +13,7 @@ const PostDetail = ({post, handleUpVotes, handleDownVotes}) => {
       <Table.Cell>
         <p><a href={post.url}>{post.title}</a></p>
         <p>{post.description}</p>
-        <span style={styleColor}>Escrito por: </span><Image src={post.writer_avatar_url} alt='avatar' avatar />
+        <span className='table_cell-writtenby'>Escrito por: </span><Image src={post.writer_avatar_url} alt='avatar' avatar />
       </Table.Cell>
     </Table.Row>
   )
